@@ -1,4 +1,9 @@
 export class User {
-  name: string;
-  email: string;
+  private name: string;
+  private email: string;
+
+  constructor(name: string, email: string) {
+    this.name = name;
+    this.email = email;
+  }
 }

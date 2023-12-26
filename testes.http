@@ -1,0 +1,2 @@
+//Arquivo que uso para testes rápidos pelo app do vscode REST Client
+GET http://localhost:3000/users
