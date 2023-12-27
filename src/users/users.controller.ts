@@ -1,15 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const user = this.usersService.create(createUserDto);
+    return res.status(HttpStatus.CREATED).json(user);
   }
 
   @Get()
@@ -17,18 +30,38 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get(':email')
+  findOne(@Param('email') email: string, @Res() res: Response) {
+    const user = this.usersService.findOne(email);
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+    return res.status(HttpStatus.OK).json(user);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch(':email')
+  update(
+    @Param('email') email: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Res() res: Response,
+  ) {
+    const user = this.usersService.findOne(email);
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    this.usersService.update(email, updateUserDto);
+    return res.status(HttpStatus.NO_CONTENT).send();
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Delete(':email')
+  remove(@Param('email') email: string, @Res() res: Response) {
+    const user = this.usersService.findOne(email);
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    this.usersService.remove(email);
+    return res.status(HttpStatus.NO_CONTENT).send();
   }
 }

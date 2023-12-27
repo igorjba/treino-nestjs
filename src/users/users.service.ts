@@ -8,22 +8,34 @@ export class UsersService {
   private readonly users: User[] = [];
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    const newUser = new User(
+      createUserDto.name,
+      createUserDto.email,
+      createUserDto.password,
+    );
+    this.users.push(newUser);
+    return newUser;
   }
 
   findAll() {
     return this.users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(email: string) {
+    return this.users.find((user) => user.getEmail() === email);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(email: string, updateUserDto: UpdateUserDto) {
+    const user = this.findOne(email);
+    user.setName(updateUserDto.name);
+    user.setEmail(updateUserDto.email);
+    user.setPassword(updateUserDto.password);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(email: string) {
+    this.users.splice(
+      this.users.findIndex((user) => user.getEmail() === email),
+      1,
+    );
   }
 }

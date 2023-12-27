@@ -1,2 +1,43 @@
-//Arquivo que uso para testes rápidos pelo app do vscode REST Client
-GET http://localhost:3000/users
+# Arquivo que uso para testes rápidos pelo app do vscode REST Client
+
+# Listar usuários
+# GET http://localhost:3000/users
+
+# Criar usuário
+
+# POST http://localhost:3000/users
+# Content-Type: application/json
+
+# {
+#     "name": "Igor",
+#     "email": "igor@email.com",
+#     "password": "123456",
+#     "techs": [
+#         "Node.js",
+#         "ReactJS",
+#         "React Native",
+#         { "title": "Javascript", "experience": 100 }
+#     ]
+# }
+
+# Obter usuário
+
+# GET http://localhost:3000/users/?email=igor@email.com
+
+# Editar usuário
+
+# PATCH http://localhost:3000/users/igor@email.com
+
+# Content-Type: application/json
+
+# {
+#     "name": "Igor",
+#     "email": "igor@email.com.br",
+#     "password": "123456",
+#     "techs": [
+#         "Node.js",
+#         "ReactJS",
+#         "React Native",
+#         { "title": "Javascript", "experience": 100 }
+#     ]
+# }
