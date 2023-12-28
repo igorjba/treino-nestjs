@@ -1,73 +1,118 @@
+# CRUD de Usuários em NestJS
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este repositório contém um projeto NestJS para um sistema CRUD (Create, Read, Update, Delete) de usuários. O projeto utiliza TypeScript e segue as melhores práticas recomendadas pelo framework NestJS.
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+<details>
+<summary><strong>Instalação</strong></summary>
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+</details>
+
+<details>
+<summary><strong>Rodando a aplicação</strong></summary>
 
 ```bash
-# development
+# desenvolvimento
 $ npm run start
 
-# watch mode
+# modo observação
 $ npm run start:dev
 
-# production mode
+# modo produção
 $ npm run start:prod
 ```
 
-## Test
+</details>
 
-```bash
-# unit tests
-$ npm run test
+<details>
+<summary><strong>Documentação da API</strong></summary>
 
-# e2e tests
-$ npm run test:e2e
+### Endpoints
 
-# test coverage
-$ npm run test:cov
+- `POST /users` - Cria um novo usuário.
+- `GET /users` - Lista todos os usuários.
+- `GET /users/:email` - Busca um usuário pelo e-mail.
+- `PATCH /users/:email` - Atualiza os dados de um usuário existente pelo e-mail.
+- `DELETE /users/:email` - Remove um usuário pelo e-mail.
+
+### DTOs
+
+#### CreateUserDto
+
+- `name` (string): Nome do usuário (mínimo 4 caracteres, máximo 20).
+- `email` (string): E-mail válido do usuário.
+- `password` (string): Senha do usuário (mínimo 6 caracteres).
+
+#### UpdateUserDto
+
+- Herda de `CreateUserDto`, todos os campos são opcionais para atualização.
+
+</details>
+
+<details>
+<summary><strong>Exemplos de uso</strong></summary>
+
+<details>
+<summary><strong>Criar usuário</strong></summary>
+
+```json
+POST /users
+Content-Type: application/json
+
+{
+    "name": "Nome do Usuário",
+    "email": "email@exemplo.com",
+    "password": "senha123"
+}
 ```
+</details>
 
-## Support
+<details>
+<summary><strong>Listar todos os usuários</strong></summary>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```http
+GET /users
+```
+</details>
 
-## Stay in touch
+<details>
+<summary><strong>Buscar usuário por e-mail</strong></summary>
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```http
+GET /users/email@exemplo.com
+```
+</details>
 
-## License
+<details>
+<summary><strong>Atualizar usuário por e-mail</strong></summary>
 
-Nest is [MIT licensed](LICENSE).
+```json
+PATCH /users/email@exemplo.com
+Content-Type: application/json
+
+{
+    "name": "Nome Atualizado",
+    "email": "novoemail@exemplo.com",
+    "password": "novaSenha123"
+}
+```
+</details>
+
+<details>
+<summary><strong>Remover usuário por e-mail</strong></summary>
+
+```http
+DELETE /users/email@exemplo.com
+```
+</details>
+
+</details>
